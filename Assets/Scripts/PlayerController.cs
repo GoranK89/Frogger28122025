@@ -1,7 +1,21 @@
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    private SpriteRenderer spriteRenderer;
+
+    private Vector2 movement = Vector2.zero;
+
+    private Animator animator;
+    private string currentAnimation = "";
+
+    private void Awake() {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     private void Update() {
+        movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
         if (Input.GetKeyDown(KeyCode.W)) {
             Move(0, 1);
         }
@@ -31,12 +45,34 @@ public class PlayerController : MonoBehaviour {
             gameManager.playerCurrentPositionX = newX;
             gameManager.playerCurrentPositionY = newY;
 
-            // move this to game manager
+            // Trigger animation based on movement direction
+            if (deltaY == 1) {
+                ChangeAnimation("PlayerJumpForward", 0);
+                Debug.Log("Jump Forward");
+            }
+            else if (deltaY == -1) {
+                ChangeAnimation("PlayerJumpBackward", 0);
+            }
+            else if (deltaX == 1) {
+                spriteRenderer.flipX = false;
+                ChangeAnimation("PlayerJumpRight", 0);
+            }
+            else if (deltaX == -1) {
+                spriteRenderer.flipX = true;
+                ChangeAnimation("PlayerJumpLeft", 0);
+            }
+
+            // TODO: move this to game manager
             int playerPositionCellValue = gameManager.grid.GetValue(gameManager.playerCurrentPositionX,
                 gameManager.playerCurrentPositionY);
             if (playerPositionCellValue == 3) {
                 Debug.Log("Player is in the river! Destroy the player.");
             }
         }
+    }
+
+    private void ChangeAnimation(string animation, float crossFade = 0.2f) {
+        animator.Play(animation, 0, 0f);
+        currentAnimation = animation;
     }
 }
