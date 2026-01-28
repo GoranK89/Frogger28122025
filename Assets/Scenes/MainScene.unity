@@ -414,8 +414,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bed170f94f0b0ceac47929ca3d67b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TrafficManager
-  carPrefabs:
+  vehiclePrefabs:
   - {fileID: 73565623233299780, guid: 31782f0c7e3c9d0e49decb8da5ac8f09, type: 3}
+  minSpawnDelay: 1
+  maxSpawnDelay: 2
 --- !u!4 &680364712
 Transform:
   m_ObjectHideFlags: 0
