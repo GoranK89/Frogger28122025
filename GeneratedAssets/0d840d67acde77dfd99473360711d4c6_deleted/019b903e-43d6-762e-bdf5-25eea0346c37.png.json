@@ -1,0 +1,20 @@
+{
+    "asset": "0d840d67acde77dfd99473360711d4c6",
+    "fileName": "019b903e-43d6-762e-bdf5-25eea0346c37.png",
+    "prompt": "Create a moder 2d tile palette suitable for a Frogger remake. Include vibrant colors, urban and natural elements, and a mix of road, water, grass and obstacles.",
+    "negativePrompt": "",
+    "model": "0409c144-da57-44a7-b531-72bc9a32fa4f",
+    "modelName": "GPT Image 1 - High",
+    "customSeed": -1,
+    "w3CTraceId": "30d76b6f4dac31a49f93323690a75cac",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

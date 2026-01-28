@@ -1,0 +1,20 @@
+{
+    "asset": "257ece6e55be1d4d6a92b3c343d57eba",
+    "fileName": "019b85f2-3b22-7485-9f4e-b42ab44e775a.png",
+    "prompt": "A grass tile, top-down view.",
+    "negativePrompt": "",
+    "model": "9b6d7135-dd33-43ae-b148-cd1212ca7052",
+    "modelName": "16-bit Pixel",
+    "customSeed": -1,
+    "w3CTraceId": "e6bd6a143bf227ef14e49ead2f5e34e6",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

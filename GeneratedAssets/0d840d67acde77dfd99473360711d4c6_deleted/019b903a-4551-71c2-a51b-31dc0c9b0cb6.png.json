@@ -1,0 +1,20 @@
+{
+    "asset": "0d840d67acde77dfd99473360711d4c6",
+    "fileName": "019b903a-4551-71c2-a51b-31dc0c9b0cb6.png",
+    "prompt": "Create a moder 2d tile palette suitable for a Frogger remake. Include vibrant colors, urban and natural elements, and a mix of road, water, grass and obstacles.",
+    "negativePrompt": "",
+    "model": "44ec3749-963a-44b1-aa54-dc19f6ed8ab2",
+    "modelName": "Unity Texture2D",
+    "customSeed": -1,
+    "w3CTraceId": "0d41e9598fcd2cb83a1ddb7a5c8c5055",
+    "refinementMode": "Generation",
+    "pixelateTargetSize": 0,
+    "pixelateKeepImageSize": false,
+    "pixelatePixelBlockSize": 0,
+    "pixelateMode": 0,
+    "pixelateOutlineThickness": 0,
+    "doodles": {
+        "m_Items": []
+    },
+    "upscaleFactor": 0
+}

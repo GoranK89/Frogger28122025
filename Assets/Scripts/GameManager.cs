@@ -5,8 +5,8 @@ public class GameManager : MonoBehaviour {
 
     public Grid grid;
     [SerializeField] private GameObject playerPrefab;
-    public int gridWidth = 15;
-    public int gridHeight = 10;
+    public int gridWidth = 16;
+    public int gridHeight = 12;
     public float cellSize = 1f;
 
     private int pavementTag = 1;
@@ -21,23 +21,13 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(-7.5f, -5));
+        grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(-9.5f, -5));
         SpawnPlayerAtGridPosition(7, 0);
 
         SetGridValues(0, 1, pavementTag); // Pavement rows
         SetGridValues(1, 4, roadTag); // Road rows
         SetGridValues(4, 5, pavementTag); // Pavement rows
-        SetGridValues(5, 9, riverTag); // River rows
-    }
-
-    private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            grid.SetValue(UtilsClass.GetMouseWorldPosition(), 56);
-        }
-
-        if (Input.GetMouseButtonDown(1)) {
-            Debug.Log(grid.GetValue(UtilsClass.GetMouseWorldPosition()));
-        }
+        SetGridValues(7, 11, riverTag); // River rows
     }
 
     private void SpawnPlayerAtGridPosition(int x, int y) {
