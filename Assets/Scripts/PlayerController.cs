@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour {
             // Trigger animation based on movement direction
             if (deltaY == 1) {
                 ChangeAnimation("PlayerJumpForward", 0);
-                Debug.Log("Jump Forward");
             }
             else if (deltaY == -1) {
                 ChangeAnimation("PlayerJumpBackward", 0);
@@ -74,5 +73,11 @@ public class PlayerController : MonoBehaviour {
     private void ChangeAnimation(string animation, float crossFade = 0.2f) {
         animator.Play(animation, 0, 0f);
         currentAnimation = animation;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.CompareTag("Vehicle")) {
+            Destroy(gameObject);
+        }
     }
 }
