@@ -61,11 +61,21 @@ public class PlayerController : MonoBehaviour {
                 ChangeAnimation("PlayerJumpLeft", 0);
             }
 
-            // TODO: move this to game manager
-            int playerPositionCellValue = gameManager.grid.GetValue(gameManager.playerCurrentPositionX,
-                gameManager.playerCurrentPositionY);
-            if (playerPositionCellValue == 3) {
-                Debug.Log("Player is in the river! Destroy the player.");
+            // TODO: move this to a separate component
+            int cellValue = gameManager.grid.GetValue(newX, newY);
+            if (cellValue == 3) {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(newPosition, 0.2f);
+                bool onLog = false;
+                foreach (Collider2D collider in colliders) {
+                    if (collider.gameObject.CompareTag("RiverLog")) {
+                        onLog = true;
+                        break;
+                    }
+                }
+
+                if (!onLog) {
+                    Destroy(gameObject);
+                }
             }
         }
     }
