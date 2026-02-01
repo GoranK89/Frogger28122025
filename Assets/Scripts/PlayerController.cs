@@ -85,6 +85,10 @@ public class PlayerController : MonoBehaviour {
                     }
                 }
             }
+
+            if (cellValue == 3 && !isOnLog) {
+                Destroy(gameObject);
+            }
         }
     }
 
