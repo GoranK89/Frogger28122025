@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3462046599873700346}
   - component: {fileID: 5726463081766997417}
   - component: {fileID: 1303763369721667775}
-  - component: {fileID: -1558017941301876021}
+  - component: {fileID: 6715978606726129983}
   m_Layer: 0
   m_Name: pfPlayer
   m_TagString: Player
@@ -175,7 +175,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!50 &-1558017941301876021
+--- !u!50 &6715978606726129983
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0

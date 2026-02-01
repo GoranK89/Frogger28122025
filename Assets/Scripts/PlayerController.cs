@@ -1,20 +1,23 @@
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
+    private GameManager gameManager;
     private SpriteRenderer spriteRenderer;
 
     private Vector2 movement = Vector2.zero;
-
     private Animator animator;
     private string currentAnimation = "";
+    private bool isOnLog = false;
 
     private void Awake() {
+        gameManager = GameManager.Instance;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update() {
         movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        PlayerOnLogBoundsCheck();
 
         if (Input.GetKeyDown(KeyCode.W)) {
             Move(0, 1);
@@ -34,14 +37,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Move(int deltaX, int deltaY) {
-        GameManager gameManager = GameManager.Instance;
+        // When player is carried by a log, this position sync is required.
+        Vector2Int currentGridPos = gameManager.grid.GetGridPosition(transform.position);
+        gameManager.playerCurrentPositionX = currentGridPos.x;
+        gameManager.playerCurrentPositionY = currentGridPos.y;
+
         int newX = gameManager.playerCurrentPositionX + deltaX;
         int newY = gameManager.playerCurrentPositionY + deltaY;
 
-        // Check bounds
-        if (newX >= 0 && newY >= 0 && newX < gameManager.gridWidth && newY < gameManager.gridHeight) {
+        // Check bounds, can not move outside of grid
+        if ((newX >= 0 && newY >= 0) && (newX < gameManager.gridWidth && newY < gameManager.gridHeight)) {
             Vector3 newPosition = gameManager.grid.GetCellCenterWorldPosition(newX, newY);
             transform.position = newPosition;
+
             gameManager.playerCurrentPositionX = newX;
             gameManager.playerCurrentPositionY = newY;
 
@@ -63,19 +71,30 @@ public class PlayerController : MonoBehaviour {
 
             // TODO: move this to a separate component
             int cellValue = gameManager.grid.GetValue(newX, newY);
+            transform.SetParent(null);
+            isOnLog = false;
+
             if (cellValue == 3) {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(newPosition, 0.2f);
-                bool onLog = false;
+
                 foreach (Collider2D collider in colliders) {
                     if (collider.gameObject.CompareTag("RiverLog")) {
-                        onLog = true;
+                        transform.SetParent(collider.transform);
+                        isOnLog = true;
                         break;
                     }
                 }
+            }
+        }
+    }
 
-                if (!onLog) {
-                    Destroy(gameObject);
-                }
+    private void PlayerOnLogBoundsCheck() {
+        if (isOnLog) {
+            Vector2Int currentGridPos = gameManager.grid.GetGridPosition(transform.position);
+
+            if (currentGridPos.x < 0 || currentGridPos.x >= gameManager.gridWidth ||
+                currentGridPos.y < 0 || currentGridPos.y >= gameManager.gridHeight) {
+                Destroy(gameObject);
             }
         }
     }
@@ -85,8 +104,8 @@ public class PlayerController : MonoBehaviour {
         currentAnimation = animation;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.CompareTag("Vehicle")) {
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Vehicle")) {
             Destroy(gameObject);
         }
     }

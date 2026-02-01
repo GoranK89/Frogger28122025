@@ -65,4 +65,11 @@ public class Grid {
     public Vector3 GetCellCenterWorldPosition(int x, int y) {
         return GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f;
     }
+
+    // Get grid position from world position
+    public Vector2Int GetGridPosition(Vector3 worldPosition) {
+        int x, y;
+        GetXY(worldPosition, out x, out y);
+        return new Vector2Int(x, y);
+    }
 }
