@@ -14,12 +14,12 @@ public class EntityManager : MonoBehaviour {
     private int[] vehiclerightSpawnRows = { 2, 4 };
     private int[] riverEntitySpawnRows = { 7, 8, 9, 10 };
 
-    private int carsSpawned = 0;
+    private int vehiclesSpawned = 0;
     private int riverEntitiesSpawned = 0;
-    private int maxCars = 20;
+    private int maxVehicles = 20;
     private int maxRiverEntities = 15;
 
-    // Car Rotation
+    // Entity rotation
     private bool rotateLeft;
 
     private void Start() {
@@ -28,7 +28,7 @@ public class EntityManager : MonoBehaviour {
     }
 
     private void Update() {
-        // TODO: this is inefficient, ok for testing
+        // NOTE: Yes, this can be optimized, but for this simple game it will do.
         GameObject[] vehicles = GameObject.FindGameObjectsWithTag("Vehicle");
         GameObject[] riverEntities = GameObject.FindGameObjectsWithTag("RiverLog");
 
@@ -39,10 +39,18 @@ public class EntityManager : MonoBehaviour {
         foreach (GameObject riverEntity in riverEntities) {
             MoveGameObject(riverEntity);
         }
+
+        foreach (GameObject vehicle in vehicles) {
+            DestroyOutOfBoundsObjects(vehicle);
+        }
+
+        foreach (GameObject riverEntity in riverEntities) {
+            DestroyOutOfBoundsObjects(riverEntity);
+        }
     }
 
     private IEnumerator SpawnVehiclesRandomly() {
-        while (carsSpawned < maxCars) {
+        while (vehiclesSpawned < maxVehicles) {
             float randomDelay = Random.Range(minSpawnDelay, maxSpawnDelay);
             yield return new WaitForSeconds(randomDelay);
 
@@ -57,7 +65,7 @@ public class EntityManager : MonoBehaviour {
                 SpawnVehicle(spawnXright, randomRightY);
             }
 
-            carsSpawned++;
+            vehiclesSpawned++;
         }
     }
 
@@ -76,6 +84,13 @@ public class EntityManager : MonoBehaviour {
                 int randomRightY = riverEntitySpawnRows[Random.Range(0, riverEntitySpawnRows.Length)];
                 SpawnRiverEntity(spawnXright, randomRightY);
             }
+        }
+    }
+
+    private void DestroyOutOfBoundsObjects(GameObject objectToBeDestroyed) {
+        if (Mathf.Abs(objectToBeDestroyed.transform.position.x) > 20f ||
+            Mathf.Abs(objectToBeDestroyed.transform.position.x) < -10f) {
+            Destroy(objectToBeDestroyed);
         }
     }
 
