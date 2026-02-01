@@ -6,13 +6,14 @@ public class EntityManager : MonoBehaviour {
     [SerializeField] private GameObject[] riverEntityPrefabs;
 
     [SerializeField] private float minSpawnDelay = 1f;
-    [SerializeField] private float maxSpawnDelay = 2f;
+    [SerializeField] private float maxSpawnDelay = 1.5f;
 
     private int spawnXleft = -4;
     private int spawnXright = 18;
     private int[] vehicleLeftSpawnRows = { 1, 3, 5 };
     private int[] vehiclerightSpawnRows = { 2, 4 };
-    private int[] riverEntitySpawnRows = { 7, 8, 9, 10 };
+    private int[] riverEntityLeftSpawnRows = { 7, 9 };
+    private int[] riverEntityRightSpawnRows = { 8, 10 };
 
     private int vehiclesSpawned = 0;
     private int riverEntitiesSpawned = 0;
@@ -77,11 +78,11 @@ public class EntityManager : MonoBehaviour {
             bool spawnOnLeft = Random.value > 0.5f;
 
             if (spawnOnLeft) {
-                int randomLeftY = riverEntitySpawnRows[Random.Range(0, riverEntitySpawnRows.Length)];
+                int randomLeftY = riverEntityLeftSpawnRows[Random.Range(0, riverEntityLeftSpawnRows.Length)];
                 SpawnRiverEntity(spawnXleft, randomLeftY);
             }
             else {
-                int randomRightY = riverEntitySpawnRows[Random.Range(0, riverEntitySpawnRows.Length)];
+                int randomRightY = riverEntityRightSpawnRows[Random.Range(0, riverEntityRightSpawnRows.Length)];
                 SpawnRiverEntity(spawnXright, randomRightY);
             }
         }
