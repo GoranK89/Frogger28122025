@@ -18,10 +18,11 @@ public class GameManager : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+
+        grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(-9.5f, -5));
     }
 
     private void Start() {
-        grid = new Grid(gridWidth, gridHeight, cellSize, new Vector3(-9.5f, -5));
         SpawnPlayerAtGridPosition(7, 0);
 
         SetGridValues(0, 1, pavementTag); // Pavement rows

@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 680364712}
   - component: {fileID: 680364711}
   m_Layer: 0
-  m_Name: TrafficManager
+  m_Name: EntityManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,8 +419,6 @@ MonoBehaviour:
   riverEntityPrefabs:
   - {fileID: 10666929018830467, guid: 4603070c76ff07b4ea9790b1af209871, type: 3}
   - {fileID: 10666929018830467, guid: 9612032322bee19c38f52f689589459a, type: 3}
-  minSpawnDelay: 1
-  maxSpawnDelay: 2
 --- !u!4 &680364712
 Transform:
   m_ObjectHideFlags: 0
