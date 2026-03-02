@@ -45,8 +45,11 @@ public class PlayerController : MonoBehaviour {
         int newX = gameManager.playerCurrentPositionX + deltaX;
         int newY = gameManager.playerCurrentPositionY + deltaY;
 
-        // Check bounds, can not move outside of grid
-        if ((newX >= 0 && newY >= 0) && (newX < gameManager.gridWidth && newY < gameManager.gridHeight)) {
+        int targetCellValue = gameManager.grid.GetValue(newX, newY);
+
+        // Check bounds, can not move outside of grid or into 0 value cells
+        if (targetCellValue != 0 && (newX >= 0 && newY >= 0) &&
+            (newX < gameManager.gridWidth && newY < gameManager.gridHeight)) {
             Vector3 newPosition = gameManager.grid.GetCellCenterWorldPosition(newX, newY);
             transform.position = newPosition;
 
@@ -70,11 +73,11 @@ public class PlayerController : MonoBehaviour {
             }
 
             // TODO: move this to a separate component
-            int cellValue = gameManager.grid.GetValue(newX, newY);
+
             transform.SetParent(null);
             isOnLog = false;
 
-            if (cellValue == 3) {
+            if (targetCellValue == 3) {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(newPosition, 0.2f);
 
                 foreach (Collider2D collider in colliders) {
@@ -86,7 +89,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
 
-            if (cellValue == 3 && !isOnLog) {
+            if (targetCellValue == 3 && !isOnLog) {
                 Destroy(gameObject);
             }
         }

@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 public class EntityManager : MonoBehaviour {
     [SerializeField] private GameObject[] vehiclePrefabs;
     [SerializeField] private GameObject[] riverEntityPrefabs;
+    [SerializeField] private GameObject[] insectEntityPrefabs;
 
     private int spawnXleft = -5;
     private int spawnXright = 19;
@@ -25,6 +26,13 @@ public class EntityManager : MonoBehaviour {
         InitializeStartingVehicles();
         StartCoroutine(SpawnVehiclesRandomly());
         StartCoroutine(SpawnRiverEntitiesRandomly());
+
+        // TODO: not good, use values from finish/home tiles to determine where to spawn these.
+        SpawnInsectEntity(1, 11);
+        SpawnInsectEntity(4, 11);
+        SpawnInsectEntity(7, 11);
+        SpawnInsectEntity(10, 11);
+        SpawnInsectEntity(13, 11);
     }
 
     private void Update() {
@@ -47,6 +55,11 @@ public class EntityManager : MonoBehaviour {
         foreach (GameObject riverEntity in riverEntities) {
             DestroyOutOfBoundsObjects(riverEntity);
         }
+    }
+
+    private void MoveGameObject(GameObject objectToBeMoved) {
+        float speed = 4f * Time.deltaTime;
+        objectToBeMoved.transform.Translate(Vector3.right * speed);
     }
 
     private void InitializeStartingVehicles() {
@@ -125,8 +138,9 @@ public class EntityManager : MonoBehaviour {
             spawnPosition, rotation);
     }
 
-    private void MoveGameObject(GameObject objectToBeMoved) {
-        float speed = 4f * Time.deltaTime;
-        objectToBeMoved.transform.Translate(Vector3.right * speed);
+    private void SpawnInsectEntity(int x, int y) {
+        Vector3 spawnPosition = GameManager.Instance.grid.GetCellCenterWorldPosition(x, y);
+        GameObject insectEntity = Instantiate(insectEntityPrefabs[Random.Range(0, insectEntityPrefabs.Length)],
+            spawnPosition, Quaternion.identity);
     }
 }
