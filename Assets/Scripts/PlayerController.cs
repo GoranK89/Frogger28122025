@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     private GameManager gameManager;
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
     private string currentAnimation = "";
     private bool isOnLog = false;
+    private bool isDead = false;
 
     private void Awake() {
         gameManager = GameManager.Instance;
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
+        if (isDead) return;
         movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         PlayerOnLogBoundsCheck();
 
@@ -37,6 +40,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Move(int deltaX, int deltaY) {
+        if (isDead) return;
+
         // When player is carried by a log, this position sync is required.
         Vector2Int currentGridPos = gameManager.grid.GetGridPosition(transform.position);
         gameManager.playerCurrentPositionX = currentGridPos.x;
@@ -90,7 +95,7 @@ public class PlayerController : MonoBehaviour {
             }
 
             if (targetCellValue == 3 && !isOnLog) {
-                Destroy(gameObject);
+                Die();
             }
         }
     }
@@ -101,9 +106,28 @@ public class PlayerController : MonoBehaviour {
 
             if (currentGridPos.x < 0 || currentGridPos.x >= gameManager.gridWidth ||
                 currentGridPos.y < 0 || currentGridPos.y >= gameManager.gridHeight) {
-                Destroy(gameObject);
+                Die();
             }
         }
+    }
+
+    private void Die() {
+        isDead = true;
+        transform.SetParent(null);
+        ChangeAnimation("PlayerDeath", 0);
+        StartCoroutine(DeathCoroutine());
+    }
+
+    private IEnumerator DeathCoroutine() {
+        // Wait one frame for the animation to start
+        yield return null;
+
+        // Wait until the death animation finishes
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f) {
+            yield return null;
+        }
+
+        Destroy(gameObject);
     }
 
     private void ChangeAnimation(string animation, float crossFade = 0.2f) {
@@ -113,7 +137,11 @@ public class PlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Vehicle")) {
-            Destroy(gameObject);
+            Die();
+        }
+
+        if (other.CompareTag("Insect")) {
+            Destroy(other.gameObject);
         }
     }
 }

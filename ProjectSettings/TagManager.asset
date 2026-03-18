@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Vehicle
   - RiverLog
+  - Insect
   layers:
   - Default
   - TransparentFX

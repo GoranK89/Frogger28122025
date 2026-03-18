@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
+        /*
         if (Input.GetMouseButtonDown(0)) {
             Vector3 mouseWorldPos = UtilsClass.GetMouseWorldPosition();
             int value = grid.GetValue(mouseWorldPos);
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour {
             // Vector2Int cellPosition = grid.GetGridPosition(mouseWorldPos);
             // Debug.Log("Clicked cell: " + cellPosition.x + ", " + cellPosition.y);
         }
+        */
     }
 
     private void Start() {
